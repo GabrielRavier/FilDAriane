@@ -71,29 +71,29 @@ def down():
 
 dir = []
 
-from enum import Enum
+# left = 0
+# up = 1
+# right = 2
+# down = 3
+lastDirection = 0
 
-class Direction(Enum):
-    LEFT_VAL = 0
-    UP_VAL = 1
-    RIGHT_VAL = 2
-    DOWN_VAL = 3
+def dirEnumToFunc(direction):
+    funcs = [left, up, right, down]
+    return funcs[direction % 4]
 
-lastDirection = LEFT_VAL
+def canTurnRight(direction):
+    global posX
+    global posY
+    values = [map[posY][posX - 1], map[posY - 1][posX], map[posY][posX + 1], map[posY + 1][posX]]
+    if (values[direction % 4] == 1):
+        return False;
+    return True;
 
-def dirEnumToFunc(value):
-    return [left, up, right, down][value]
-
-def canTurnRight(value):
-    if ([map[posY][posX - 1], map[posY][posX + 1], map[posY - 1][posX], map[posY + 1][posX]][value] == 1)
-        return false;
-    return true;
-
-def algo(value):
+def algo(currentIter):
     global lastDirection
     global posX
     global posY
-    while (canTurnRight(lastDirection))
+    while (canTurnRight(lastDirection) == True):
         lastDirection += 1
 
     dirEnumToFunc(lastDirection)()
