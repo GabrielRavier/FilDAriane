@@ -71,60 +71,78 @@ def down():
 
 dir = []
 
-pathToExit = [[]] * 100
+pathToExit = []
 alreadyVisitedPositions = [[]] * 100
 hasSolved = False
 
 def solveMaze(x, y):
     global alreadyVisitedPositions
     global pathToExit
-    if map[x][y] == 2:
+    if map[y][x] == 2:
+        pathToExit.append([x, y])
         return True
 
-    if map[x][y] == 1 or alreadyVisitedPositions[x][y]:
+    if map[y][x] == 1 or alreadyVisitedPositions[y][x]:
         return False
 
-    alreadyVisitedPositions[x][y] = True
+    alreadyVisitedPositions[y][x] = True
 
     if x != 0:
         if solveMaze(x - 1, y):
-            pathToExit[x][y] = True
+            pathToExit.append([x, y])
             return True
 
     if x != 99:
         if solveMaze(x + 1, y):
-            pathToExit[x][y] = True
+            pathToExit.append([x, y])
             return True
 
     if y != 0:
         if solveMaze(x, y - 1):
-            pathToExit[x][y] = True
+            pathToExit.append([x, y])
             return True
 
     if y != 99:
         if solveMaze(x, y + 1):
-            pathToExit[x][y] = True
+            pathToExit.append([x, y])
             return True
 
     return False
 
+def doMove(currentIter):
+    global posX
+    global posY
+    xAndY = pathToExit[currentIter + 1]
+    possibilities = [[posX, posY - 1], [posX - 1, posY], [posX, posY + 1], [posX + 1, posY]]
+    funcs = [up, left, down, right]
+
+    i = 0
+    while i < 4:
+        if possibilities[i] == xAndY:
+            break;
+        i += 1
+
+    if i == 4:
+        raise ValueError("i bad")
+
+    funcs[i]()
+
+    
 
 def algo(currentIter):
     global hasSolved
-    global lastMove
+    global latestMove
     global alreadyVisitedPositions
     global pathToExit
-    for i in range(100):
-        alreadyVisitedPositions[i] = [False] * 100
-
-    for i in range(100):
-        pathToExit[i] = [False] * 100
-
     if hasSolved == False:
-        solveMaze(1, 1)
+        for i in range(100):
+            alreadyVisitedPositions[i] = [False] * 100
 
-    hasSolved = True
-    print(pathToExit[1])
+        solveMaze(1, 1)
+        pathToExit = pathToExit[::-1]
+        latestMove = None
+
+    doMove(currentIter)
 
 
     
