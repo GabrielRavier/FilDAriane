@@ -69,51 +69,35 @@ def down():
     if (map[posY][posX] == 2):
         exit(0)
 
-
-
 dir = []
 
+from enum import Enum
+
+class Direction(Enum):
+    LEFT_VAL = 0
+    UP_VAL = 1
+    RIGHT_VAL = 2
+    DOWN_VAL = 3
+
+lastDirection = LEFT_VAL
+
+def dirEnumToFunc(value):
+    return [left, up, right, down][value]
+
+def canTurnRight(value):
+    if ([map[posY][posX - 1], map[posY][posX + 1], map[posY - 1][posX], map[posY + 1][posX]][value] == 1)
+        return false;
+    return true;
+
 def algo(value):
-    a = [down, down, right, right, right, down, down, left, left, down, down, down, down, right, right, right, right, right, down, down, left, left, down, down, down, down]
-    for i in range(0, 3):
-        a.append(right)
+    global lastDirection
+    global posX
+    global posY
+    while (canTurnRight(lastDirection))
+        lastDirection += 1
 
-    for i in range(0, 2):
-        a.append(up)
-
-    for i in range(0, 17):
-        a.append(right)
-
-    tmp = [up, up, left, left]
-    a.extend(tmp)
-    a.extend(tmp)
-    a.extend([left, up, up])
-
-    for i in range(0, 11):
-        a.append(right)
-
-    for i in range(0, 4):
-        a.append(down)
-
-    for i in range(0, 13):
-        a.append(right)
-
-    for i in range(0, 6):
-        a.append(down)
-
-    for i in range(0, 6):
-        a.append(left)
-
-    tmp = [down, down]
-    a.extend(tmp)
-
-    for i in range(0, 9):
-        a.append(right)
-
-    a.extend(tmp)
-
-    if value < len(a):
-        a[value]()
+    dirEnumToFunc(lastDirection)()
+    
 
 
 
