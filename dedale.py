@@ -81,22 +81,29 @@ def dirEnumToFunc(direction):
     funcs = [left, up, right, down]
     return funcs[direction % 4]
 
-def canTurnRight(direction):
+def canGoForward(direction):
     global posX
     global posY
-    values = [map[posY][posX - 1], map[posY - 1][posX], map[posY][posX + 1], map[posY + 1][posX]]
+    values = [(map[posY][posX - 1]), (map[posY - 1][posX]), (map[posY][posX + 1]), (map[posY + 1][posX])]
     if (values[direction % 4] == 1):
         return False;
     return True;
+
+def canTurnRight(direction):
+    return canGoForward(direction + 1)
 
 def algo(currentIter):
     global lastDirection
     global posX
     global posY
-    while (canTurnRight(lastDirection) == True):
-        lastDirection += 1
+    while (canTurnRight(lastDirection) == False and canGoForward(lastDirection) == False):
+        lastDirection -= 1
 
+    if (canTurnRight(lastDirection)):  
+        lastDirection += 1
     dirEnumToFunc(lastDirection)()
+
+
     
 
 
