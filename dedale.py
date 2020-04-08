@@ -71,37 +71,60 @@ def down():
 
 dir = []
 
-# left = 0
-# up = 1
-# right = 2
-# down = 3
-lastDirection = 0
+pathToExit = [[]] * 100
+alreadyVisitedPositions = [[]] * 100
+hasSolved = False
 
-def dirEnumToFunc(direction):
-    funcs = [left, up, right, down]
-    return funcs[direction % 4]
+def solveMaze(x, y):
+    global alreadyVisitedPositions
+    global pathToExit
+    if map[x][y] == 2:
+        return True
 
-def canGoForward(direction):
-    global posX
-    global posY
-    values = [(map[posY][posX - 1]), (map[posY - 1][posX]), (map[posY][posX + 1]), (map[posY + 1][posX])]
-    if (values[direction % 4] == 1):
-        return False;
-    return True;
+    if map[x][y] == 1 or alreadyVisitedPositions[x][y]:
+        return False
 
-def canTurnRight(direction):
-    return canGoForward(direction + 1)
+    alreadyVisitedPositions[x][y] = True
+
+    if x != 0:
+        if solveMaze(x - 1, y):
+            pathToExit[x][y] = True
+            return True
+
+    if x != 99:
+        if solveMaze(x + 1, y):
+            pathToExit[x][y] = True
+            return True
+
+    if y != 0:
+        if solveMaze(x, y - 1):
+            pathToExit[x][y] = True
+            return True
+
+    if y != 99:
+        if solveMaze(x, y + 1):
+            pathToExit[x][y] = True
+            return True
+
+    return False
+
 
 def algo(currentIter):
-    global lastDirection
-    global posX
-    global posY
-    while (canTurnRight(lastDirection) == False and canGoForward(lastDirection) == False):
-        lastDirection -= 1
+    global hasSolved
+    global lastMove
+    global alreadyVisitedPositions
+    global pathToExit
+    for i in range(100):
+        alreadyVisitedPositions[i] = [False] * 100
 
-    if (canTurnRight(lastDirection)):  
-        lastDirection += 1
-    dirEnumToFunc(lastDirection)()
+    for i in range(100):
+        pathToExit[i] = [False] * 100
+
+    if hasSolved == False:
+        solveMaze(1, 1)
+
+    hasSolved = True
+    print(pathToExit[1])
 
 
     
