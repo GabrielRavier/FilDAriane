@@ -1,7 +1,8 @@
 from tkinter import *
+import sys
+sys.setrecursionlimit(10000)
 
-
-incr = 2
+incr = 1
 size = incr * 10
 posX = 1
 posY = 1
