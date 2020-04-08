@@ -74,7 +74,46 @@ def down():
 dir = []
 
 def algo(value):
-    down()
+    a = [down, down, right, right, right, down, down, left, left, down, down, down, down, right, right, right, right, right, down, down, left, left, down, down, down, down]
+    for i in range(0, 3):
+        a.append(right)
+
+    for i in range(0, 2):
+        a.append(up)
+
+    for i in range(0, 17):
+        a.append(right)
+
+    tmp = [up, up, left, left]
+    a.extend(tmp)
+    a.extend(tmp)
+    a.extend([left, up, up])
+
+    for i in range(0, 11):
+        a.append(right)
+
+    for i in range(0, 4):
+        a.append(down)
+
+    for i in range(0, 13):
+        a.append(right)
+
+    for i in range(0, 6):
+        a.append(down)
+
+    for i in range(0, 6):
+        a.append(left)
+
+    tmp = [down, down]
+    a.extend(tmp)
+
+    for i in range(0, 9):
+        a.append(right)
+
+    a.extend(tmp)
+
+    if value < len(a):
+        a[value]()
 
 
 
